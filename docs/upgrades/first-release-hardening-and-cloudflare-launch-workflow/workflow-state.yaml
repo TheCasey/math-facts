@@ -1,0 +1,38 @@
+workflow_name: first-release-hardening-and-cloudflare-launch
+workflow_title: "First Release Hardening And Cloudflare Launch Workflow"
+workflow_summary: "Take the already-implemented underwater math facts app through release hardening, workflow alignment, Cloudflare Pages preparation, and final verification for the first public launch."
+workflow_status: completed
+source_plan_path: "docs/upgrades/first-release-hardening-and-cloudflare-launch.md"
+master_developer_start_prompt_path: "docs/upgrades/first-release-hardening-and-cloudflare-launch-workflow/start-master-developer-chat.md"
+current_phase_number: 4
+current_phase_slug: phase-04-release-verification-and-signoff
+current_role: none
+phase_status: completed
+owner: none
+next_downstream_role: none
+last_completed_phase_number: 4
+last_completed_phase_slug: phase-04-release-verification-and-signoff
+last_completed_role: tester
+last_handoff_role: none
+blocked_reason: none
+last_updated: 2026-05-12
+active_phase_path: none
+active_run_log_path: none
+phase_sequence:
+  - phase-01-audit-and-workflow-alignment
+  - phase-02-gameplay-and-usability-hardening
+  - phase-03-cloudflare-pages-prep
+  - phase-04-release-verification-and-signoff
+phase_role_sequences:
+  phase-01-audit-and-workflow-alignment:
+    - developer
+    - tester
+  phase-02-gameplay-and-usability-hardening:
+    - developer
+    - tester
+  phase-03-cloudflare-pages-prep:
+    - developer
+    - tester
+  phase-04-release-verification-and-signoff:
+    - developer
+    - tester

@@ -1,0 +1,44 @@
+workflow_name: underwater-math-facts-game
+workflow_title: "Underwater Math Facts Game Workflow"
+workflow_summary: "Historical build-out scaffold only. The repo already contains setup, gameplay, mastery, and stats; use docs/upgrades/first-release-hardening-and-cloudflare-launch-workflow/ for active release work."
+workflow_status: superseded
+source_plan_path: "docs/specs/underwater-math-facts-game.md"
+master_developer_start_prompt_path: "docs/specs/underwater-math-facts-game-workflow/start-master-developer-chat.md"
+current_phase_number: 0
+current_phase_slug: superseded-by-first-release-hardening-workflow
+current_role: none
+phase_status: superseded
+owner: none
+next_downstream_role: none
+last_completed_phase_number: 3
+last_completed_phase_slug: phase-03-mastery-and-stats
+last_completed_role: historical_repo_state
+last_handoff_role: none
+blocked_reason: "Use docs/upgrades/first-release-hardening-and-cloudflare-launch-workflow/ instead of continuing this scaffold."
+last_updated: 2026-05-11
+active_phase_path: none
+active_run_log_path: none
+superseded_by_workflow_path: "docs/upgrades/first-release-hardening-and-cloudflare-launch-workflow/workflow-plan.md"
+phase_sequence:
+  - phase-01-foundation-and-setup-shell
+  - phase-02-core-underwater-gameplay
+  - phase-03-mastery-and-stats
+  - phase-04-polish-and-cloudflare-release-prep
+phase_role_sequences:
+  phase-01-foundation-and-setup-shell:
+    - developer
+    - tester
+  phase-02-core-underwater-gameplay:
+    - developer
+    - tester
+  phase-03-mastery-and-stats:
+    - developer
+    - tester
+  phase-04-polish-and-cloudflare-release-prep:
+    - developer
+    - tester
+historical_phase_statuses:
+  phase-01-foundation-and-setup-shell: implemented_in_repo
+  phase-02-core-underwater-gameplay: implemented_in_repo
+  phase-03-mastery-and-stats: implemented_in_repo
+  phase-04-polish-and-cloudflare-release-prep: superseded_by_release_workflow

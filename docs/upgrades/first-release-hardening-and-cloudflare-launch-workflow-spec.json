@@ -1,0 +1,170 @@
+{
+  "workflow_title": "First Release Hardening And Cloudflare Launch Workflow",
+  "workflow_slug": "first-release-hardening-and-cloudflare-launch",
+  "workflow_summary": "Take the already-implemented underwater math facts app through release hardening, workflow alignment, Cloudflare Pages preparation, and final verification for the first public launch.",
+  "roles": {
+    "master-developer": "Own workflow orchestration, reconcile repo reality with the old broader scaffold, and dispatch one bounded release-hardening task at a time.",
+    "developer": "Implement only the active hardening or deployment-prep slice and leave clear release-oriented notes.",
+    "tester": "Validate only the active slice and record concrete release risks, pass criteria, or blockers.",
+    "researcher": "Answer bounded Cloudflare or release-process blockers without drifting into implementation."
+  },
+  "phases": [
+    {
+      "slug": "audit-and-workflow-alignment",
+      "name": "Audit And Workflow Alignment",
+      "goal": "Reconcile the planning artifacts and workflow state with the code that is already implemented so release work starts from the real current baseline.",
+      "depends_on": [],
+      "role_sequence": ["developer", "tester"],
+      "scope": [
+        "Audit the implemented app against roadmap, spec, and the older broad workflow.",
+        "Update stale workflow notes or release-facing docs so they reflect repo reality.",
+        "Identify the highest-priority remaining release gaps."
+      ],
+      "deliverables": [
+        "Updated workflow or release-state notes",
+        "Short release-gap inventory",
+        "Clean starting baseline for the remaining hardening phases"
+      ],
+      "files_to_touch": [
+        "docs/",
+        "README.md",
+        "src/"
+      ],
+      "exit_criteria": [
+        "The docs no longer imply that setup, gameplay, and stats are unimplemented.",
+        "The next hardening targets are explicit and grounded in the current app.",
+        "A downstream agent can continue release work without re-auditing the whole repo."
+      ],
+      "test_commands": [
+        "npm test",
+        "npm run build"
+      ],
+      "next_phase_inputs": [
+        "Aligned release baseline",
+        "Explicit hardening targets"
+      ],
+      "agent_briefs": {
+        "master-developer": "Treat this phase as a reality-alignment pass, not a feature pass.",
+        "developer": "Do not add new product scope. Focus on correcting stale assumptions and making the next release tasks explicit.",
+        "tester": "Validate that the updated docs and notes match the observable behavior of the current app."
+      }
+    },
+    {
+      "slug": "gameplay-and-usability-hardening",
+      "name": "Gameplay And Usability Hardening",
+      "goal": "Address the highest-priority fairness, distractor, responsiveness, and interaction issues in the current playable build.",
+      "role_sequence": ["developer", "tester"],
+      "scope": [
+        "Tune distractor generation and survival pacing.",
+        "Polish keyboard, touch, and reduced-motion behavior where needed.",
+        "Improve responsive behavior for the current game and stats screens."
+      ],
+      "deliverables": [
+        "Focused gameplay or UI polish changes",
+        "Updated tests where logic changed",
+        "Documented remaining known limitations if any tuning is intentionally deferred"
+      ],
+      "files_to_touch": [
+        "src/features/game/",
+        "src/features/setup/",
+        "src/features/stats/",
+        "src/lib/game/",
+        "src/styles/"
+      ],
+      "exit_criteria": [
+        "The biggest currently-known playability gaps are addressed.",
+        "The app remains buildable and testable after tuning.",
+        "The first-release experience feels coherent on desktop and touch-sized layouts."
+      ],
+      "test_commands": [
+        "npm test",
+        "npm run build"
+      ],
+      "next_phase_inputs": [
+        "Release candidate UI and gameplay behavior",
+        "Known limitations list if any issues remain intentionally deferred"
+      ],
+      "agent_briefs": {
+        "master-developer": "Keep this phase tightly scoped to release-critical polish rather than backlog features.",
+        "developer": "Do not start accounts, teachers, or new content. Fix the highest-signal usability issues only.",
+        "tester": "Focus on whether the gameplay loop now feels fair, stable, and usable rather than on stylistic opinions."
+      }
+    },
+    {
+      "slug": "cloudflare-pages-prep",
+      "name": "Cloudflare Pages Prep",
+      "goal": "Make the repo and docs ready for GitHub-connected Cloudflare Pages previews and production attachment on mathfacts.thecaseyb.com.",
+      "role_sequence": ["developer", "tester"],
+      "scope": [
+        "Add or improve repo documentation for install, dev, build, and deploy.",
+        "Document the Cloudflare Pages preview and custom-domain flow.",
+        "Ensure there are no hidden local-only assumptions blocking deployment."
+      ],
+      "deliverables": [
+        "Deployment documentation",
+        "Preview-deploy and production-domain checklist",
+        "Any minimal repo config changes needed for clean deployment"
+      ],
+      "files_to_touch": [
+        "README.md",
+        "docs/",
+        "package.json"
+      ],
+      "exit_criteria": [
+        "A maintainer can follow the repo docs to build and prepare the app for Cloudflare Pages.",
+        "The preview-deploy and custom-domain flow is documented for mathfacts.thecaseyb.com.",
+        "The repo does not rely on undocumented local setup tricks."
+      ],
+      "test_commands": [
+        "npm run build"
+      ],
+      "next_phase_inputs": [
+        "Documented deployment path",
+        "Release checklist draft"
+      ],
+      "agent_briefs": {
+        "master-developer": "Keep this phase pragmatic and documentation-oriented unless a tiny repo change is clearly required.",
+        "developer": "Focus on making deployment repeatable and understandable, not on inventing infrastructure that the app does not need.",
+        "tester": "Validate the docs against the real repo commands and flag any missing steps."
+      }
+    },
+    {
+      "slug": "release-verification-and-signoff",
+      "name": "Release Verification And Signoff",
+      "goal": "Run the final release checks, summarize known limitations, and produce a clear signoff checklist for the first public launch.",
+      "role_sequence": ["developer", "tester"],
+      "scope": [
+        "Run the final automated checks.",
+        "Manually verify the core app flows against the release candidate.",
+        "Document the known limitations and launch checklist."
+      ],
+      "deliverables": [
+        "Release checklist",
+        "Known limitations note",
+        "Final verification summary"
+      ],
+      "files_to_touch": [
+        "docs/",
+        "README.md"
+      ],
+      "exit_criteria": [
+        "The release candidate has a clear pass or blocker summary.",
+        "The launch checklist is concrete enough to use during Cloudflare Pages setup.",
+        "Known limitations are documented instead of implied."
+      ],
+      "test_commands": [
+        "npm test",
+        "npm run build"
+      ],
+      "next_phase_inputs": [
+        "Launch-ready release notes",
+        "Clear blockers if the app is not ready"
+      ],
+      "agent_briefs": {
+        "master-developer": "This phase is about signoff quality, not additional feature work.",
+        "developer": "Record release readiness clearly and keep any final edits minimal.",
+        "tester": "Treat this as a release gate and enumerate concrete blockers if the app is not yet ready."
+      }
+    }
+  ]
+}

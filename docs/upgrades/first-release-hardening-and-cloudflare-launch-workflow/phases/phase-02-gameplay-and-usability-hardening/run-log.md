@@ -1,0 +1,269 @@
+# Phase 2 Run Log
+
+## Status Snapshot
+
+- Phase: `phase-02-gameplay-and-usability-hardening`
+- Current status: `completed`
+- Current owner: `master-developer`
+- Next downstream role: `phase-03-cloudflare-pages-prep`
+- Last updated: `2026-05-12`
+
+## Master Developer Reviews
+
+- 2026-05-11 phase advance: Phase 1 is complete after a doc-only alignment pass plus tester validation, so release work can move into gameplay and usability hardening.
+- 2026-05-11 active source of truth: continue using `docs/upgrades/first-release-hardening-and-cloudflare-launch-workflow/`; do not reopen or execute the older historical scaffold under `docs/specs/underwater-math-facts-game-workflow/`.
+- 2026-05-11 scope tightening: the first Phase 2 slice is setup-start guardrails and regression coverage. The current setup UI renders validation errors, but invalid settings can still enter gameplay through the start action.
+- 2026-05-11 deferred within Phase 2: distractor tuning, survival pacing changes, and broader keyboard/touch/reduced-motion/responsive polish should wait for a later Phase 2 pass unless a tiny support change is required by the start-flow fix.
+- 2026-05-11 blocker check: no immediate blocker for this handoff.
+- 2026-05-11 review after developer pass: the slice stayed narrow, addressed the explicit release-gap item from Phase 1, and included the required `npm test` plus `npm run build` verification. Send this slice to `tester` before dispatching the next Phase 2 hardening pass.
+- 2026-05-11 tester follow-up decision: the inspected runtime behavior is acceptable for this slice, but the regression coverage is still too narrow for the intended release-critical rule. Keep Phase 2 active and send one bounded follow-up to `developer`.
+- 2026-05-11 tightened follow-up scope: extend the existing guardrail tests beyond `no enabled operations` to include at least one representative range-invalid settings shape already recognized by `validateSettings`, with `min > max` required. Keep this follow-up test-focused unless a tiny production fix is genuinely needed.
+- 2026-05-11 follow-up review: the developer kept the fix test-only, added representative `min > max` coverage at the setup UI, parent bypass, and direct validation layers, and re-ran `npm test`. Send this slice back to `tester` to confirm the earlier regression-coverage failure is resolved.
+- 2026-05-11 slice acceptance: the tester pass closes the setup-start guardrail slice. The next bounded Phase 2 slice should target distractor quality in pure question-generation logic, which is still a documented release gap and is narrower and easier to verify than combining pacing plus UI polish in one handoff.
+- 2026-05-11 next-slice scope: keep this handoff centered on `src/lib/game/questions.ts` and targeted question-generation tests unless a tiny supporting adjustment is required elsewhere. Defer survival pacing and broader keyboard, touch, reduced-motion, and responsive hardening to later Phase 2 passes.
+- 2026-05-11 distractor review: the developer kept this slice in pure question-generation logic, added direct distractor assertions plus generated-choice safety checks, and ran both `npm test` and `npm run build`. Send this slice to `tester` before starting survival pacing or broader usability hardening.
+- 2026-05-11 tester follow-up decision for distractors: the implementation remains acceptable, but the test matrix is still missing a representative non-edge subtraction distractor assertion. Keep this follow-up narrowly test-focused and send it back to `developer`.
+- 2026-05-11 tightened follow-up scope: add representative subtraction distractor coverage for a normal subtraction fact in `src/lib/game/questions.test.ts` so the slice proves subtraction-shaped wrong answers in addition to the existing zero-difference non-negative safety case. Do not broaden this into pacing or UI work.
+- 2026-05-11 follow-up review for subtraction coverage: the developer kept the fix test-only, added a representative non-edge subtraction distractor assertion, and re-ran `npm test`. Send the distractor-quality slice back to `tester` to confirm the subtraction coverage gap is resolved.
+- 2026-05-11 distractor slice acceptance: the tester pass closes the remaining subtraction coverage gap, so the distractor-quality slice is now accepted complete.
+- 2026-05-11 next-slice decision: the next bounded Phase 2 slice should target survival pacing in the round loop, especially easy and medium fairness, before the later broad keyboard, touch, reduced-motion, and responsive hardening pass.
+- 2026-05-11 pacing-slice scope: keep this handoff centered on the round-loop tuning surface in `src/features/game/GameScreen.tsx` and any tiny supporting change needed for testability. Do not combine this slice with the later broad UI/input hardening pass.
+- 2026-05-11 pacing review: the developer kept this slice bounded to the round-loop tuning surface, moved shared air values into a small config surface, added focused pacing checks, and ran both `npm test` and `npm run build`. Send this slice to `tester` before starting the later broad UI/input hardening pass.
+- 2026-05-11 tester follow-up decision for pacing: the direction of the tuning is acceptable, but the current pacing test overstates medium fairness because it does not model the live inter-question drain. Keep the follow-up narrowly focused on test/runtime alignment and any minimal medium retune still required after that correction.
+- 2026-05-11 tightened follow-up scope: account for the `420` ms locked transition window from `queueNextQuestion` in the pacing model, then re-evaluate easy and medium fairness against the corrected full-cycle math. If the corrected model still shows medium is too punitive for the intended first-release target, make the smallest tuning adjustment needed without flattening hard and challenge.
+- 2026-05-12 pacing follow-up review: the developer aligned the pacing verification with the live loop by sharing the `420` ms inter-question delay, corrected the full-cycle drain model, made the smallest medium-only retune needed, and re-ran both `npm test` and `npm run build`. Send this survival-pacing slice to `tester` before opening the later broad UI/input hardening pass.
+- 2026-05-12 tester follow-up decision for pacing alignment: the shared `420` ms delay now matches runtime and the difficulty ladder remains coherent, but the verification still models passive drain continuously while the live loop drains in `100` ms ticks. Keep Phase 2 on this slice and send one more bounded follow-up to `developer`.
+- 2026-05-12 tightened follow-up scope: align the pacing verification with the live `100` ms drain cadence and make only the smallest additional medium adjustment needed, if any, so the `60%` moderate-response target stays non-negative across tick alignments without flattening easy, hard, or challenge.
+- 2026-05-12 tick-cadence follow-up review: the developer aligned the pacing verification with the live `100` ms drain cadence, introduced a shared drain-interval constant, made the smallest additional medium-only retune needed, and re-ran both `npm test` and `npm run build`. Send this survival-pacing slice to `tester` before opening the later broad keyboard, touch, reduced-motion, and responsive hardening slice.
+- 2026-05-12 survival-pacing slice acceptance: the tester pass closes the remaining pacing-model mismatch. Setup-start guardrails, distractor quality, and survival pacing are now the accepted completed slices inside Phase 2.
+- 2026-05-12 next-slice decision: keep Phase 2 active for a bounded gameplay-input hardening pass before opening any broader setup/stats responsive sweep. The highest-signal remaining release gap is Chromebook/tablet usability in the live question-answering surface.
+- 2026-05-12 tightened next-slice scope: focus on `src/features/game/GameScreen.tsx` and the minimum supporting style changes needed to improve keyboard fallback, visible focus, touch-target usability, and reduced-motion behavior in the active gameplay screen. Defer broader setup/stats responsive polish unless a tiny support change is genuinely required by this slice.
+- 2026-05-12 gameplay-input review: the developer kept this slice tightly centered on the live gameplay answering surface, added focused keyboard/touch/reduced-motion usability improvements plus interaction tests, and re-ran both `npm test` and `npm run build`. Send this slice to `tester` before opening the broader setup/stats responsive sweep.
+- 2026-05-12 gameplay-input slice acceptance: the tester pass closes the bounded gameplay-input hardening slice. The remaining Phase 2 work is now the intentionally deferred broader setup/stats responsive sweep.
+- 2026-05-12 next-slice decision: keep Phase 2 active for one bounded responsive-layout pass covering setup and stats first, with `results` or topbar/profile-panel touchups only if a small shared layout adjustment is needed.
+- 2026-05-12 tightened next-slice scope: focus on `src/features/setup/SetupScreen.tsx`, `src/features/stats/StatsScreen.tsx`, and the minimum supporting CSS in `src/styles/global.css` needed to make these screens coherent on tablet and smaller laptop/Chromebook widths. Do not reopen gameplay logic or broaden into Phase 3 docs.
+- 2026-05-12 setup/stats responsive review: the developer kept this slice bounded to setup/stats layout hardening plus minimal shared shell support, verified `npm test` and `npm run build`, and completed a local browser gut-check at tablet and narrow-laptop widths. Send this slice to `tester` before Phase 3.
+- 2026-05-12 phase acceptance: the tester pass closes the bounded setup/stats responsive sweep. Phase 2 now satisfies the remaining release-hardening scope closely enough to advance into Phase 3: Cloudflare Pages prep.
+## Developer Results
+
+- 2026-05-12 setup/stats responsive hardening slice:
+  - Kept this pass bounded to setup/stats layout hardening plus minimal shared shell support. No gameplay logic, pacing, input handling, backend, README, Cloudflare Pages, or Phase 4 work was reopened.
+  - Updated `src/styles/global.css` for narrower classroom-device widths:
+    - setup action buttons now wrap cleanly without becoming oversized in column layouts
+    - setup operation cards use safer responsive grid minimums, full-width number inputs, auto-stacking range fields, wrapped card footers, and non-cramped recommended-range buttons
+    - difficulty cards now keep stable readable dimensions while still collapsing cleanly on narrow widths
+    - stats metric, insight, fact-list, and recent-session grids now choose wider card/list columns before content gets cramped
+    - shared topbar/profile-chip/panel support now handles wrapping and long profile names more predictably on tablet and small laptop widths
+  - Added tiny semantic styling hooks in `src/features/stats/StatsScreen.tsx` (`stats-hero` and `session-panel`) so the stats-specific responsive CSS does not rely on brittle first-child selectors.
+  - Did not add tests because this slice did not introduce meaningful component logic; it is CSS/layout-only aside from class names.
+  - Browser gut-check completed with the local Vite dev server at `http://127.0.0.1:5173/`:
+    - setup screen inspected at `820x768` and `640x760`
+    - stats screen inspected at `820x768` and `640x760`
+    - no browser console errors were reported during the check
+  - Required verification completed:
+    - `npm test` ✅ (`7` test files passed, `24` tests passed)
+    - `npm run build` ✅ (`vite` production build completed successfully)
+  - Remaining later-Phase-2 work intentionally deferred after this setup/stats responsive pass:
+    - tester/manual validation on actual target classroom devices if desired
+    - no known developer-side setup/stats responsive blocker remains from this pass
+  - This closes the developer side of the bounded setup/stats responsive hardening slice and returns control to `master-developer`.
+- 2026-05-12 gameplay-input hardening slice:
+  - Updated `src/features/game/GameScreen.tsx` with release-focused answering-surface hardening only:
+    - active questions now restore focus to the answer surface so keyboard users do not have to tab back in from the HUD on every new prompt
+    - added predictable keyboard fallback on top of the existing buttons: `1-6` answer shortcuts plus arrow, `Home`, and `End` focus movement across current choices
+    - added explicit answer-surface instructions, timer and air `progressbar` semantics, and polite feedback announcements for non-pointer and reduced-motion use
+    - kept the existing click and tap flow intact rather than replacing it with a separate keyboard-only path
+  - Tightened `src/styles/global.css` only around the gameplay screen:
+    - stronger visible focus treatment for answer choices and `Leave dive`
+    - larger minimum hit targets plus `touch-action` tuning for answer choices and the exit control
+    - clearer timer copy and reduced-motion instruction text for the live answering surface
+    - a narrow gameplay-only narrow-width adjustment so HUD actions stack more cleanly on smaller classroom devices
+  - Added focused interaction coverage in `src/features/game/GameScreen.test.tsx`:
+    - bubble-field coverage proves initial answer focus plus arrow-key movement
+    - reduced-motion coverage proves number-key answering and focus restoration after the next question loads
+  - Required verification completed:
+    - `npm test` ✅ (`7` test files passed, `24` tests passed)
+    - `npm run build` ✅ (`vite` production build completed successfully)
+  - Remaining later-Phase-2 work intentionally deferred after this gameplay-input pass:
+    - broader responsive hardening for setup and stats screens
+    - any multi-screen keyboard or touch polish outside the active gameplay answering surface
+  - This closes the developer side of the bounded gameplay-input hardening slice and returns control to `master-developer`.
+- 2026-05-12 survival pacing tick-cadence follow-up:
+  - Added shared `ROUND_AIR_DRAIN_INTERVAL_MS = 100` in `src/lib/game/types.ts` and updated `src/features/game/GameScreen.tsx` to compute live per-tick air drain from that cadence instead of the hidden `/ 10` assumption.
+  - Updated `src/lib/game/roundPacing.test.ts` so pacing verification now models the live `100` ms drain cadence with floor/ceil tick counts across interval alignment rather than continuous passive-drain math.
+  - The medium `60%` moderate-response full cycle is now checked as `4320` ms with `43` best-alignment ticks and `44` worst-alignment ticks, matching the live loop timing risk identified by tester validation.
+  - Made the smallest two-decimal medium-only retune needed after the tick-accurate model: `medium` air drain `2.75 -> 2.72`.
+    - At the `44`-tick worst alignment, medium now lands at about `+0.032` air instead of `-0.1`.
+    - `2.72` still keeps a full medium bubble under slightly more passive pressure than easy, preserving the easy-to-medium ladder.
+    - Hard and challenge remain net negative even at the best tick alignment for the same `60%` response target, preserving their tighter pacing.
+  - Required verification completed:
+    - `npm test` ✅ (`6` test files passed, `22` tests passed)
+    - `npm run build` ✅ (`vite` production build completed successfully)
+  - This closes the remaining survival-pacing mismatch between the verification and the live `100` ms air-drain loop on the developer side and returns control to `master-developer`.
+- 2026-05-12 survival pacing alignment follow-up:
+  - Added `ROUND_NEXT_QUESTION_DELAY_MS` in `src/lib/game/types.ts` and updated `src/features/game/GameScreen.tsx` to consume it, so the pacing verification and the live round loop now share the same inter-question lock-window timing.
+  - Corrected `src/lib/game/roundPacing.test.ts` to model full-cycle passive drain instead of only the within-bubble response window:
+    - includes the `420` ms locked delay from `queueNextQuestion`
+    - proves the locked window subtracts additional medium air exactly in proportion to `airDrainPerSecond`
+    - checks moderate-response fairness against the live full-cycle math, not the earlier partial model
+    - replaces the old response-only recovery-window assertion with a net-positive answer-window ladder that still descends by difficulty
+  - Narrowly retuned medium only after the corrected model showed the prior `3.0` drain still made a `60%` correct-response share lose air in the live loop. Adjusted `medium` air drain `3.0 -> 2.75` in `src/lib/game/types.ts`.
+  - The corrected ladder remains coherent for the intended first release:
+    - `easy` stays more forgiving than `medium` on the same `60%` correct-response share
+    - `medium` stays slightly net positive on that share in the full loop while still draining more total air than `easy` across a full unanswered bubble
+    - `hard` and `challenge` remain net negative on the same share and keep much tighter net-positive answer windows than `medium`
+  - Required verification completed:
+    - `npm test` ✅ (`6` test files passed, `22` tests passed)
+    - `npm run build` ✅ (`vite` production build completed successfully)
+  - This closes the survival-pacing mismatch between the pacing verification and the live round loop on the developer side and returns control to `master-developer`.
+- 2026-05-11 survival pacing slice:
+  - Tuned the first-release pacing surface in `src/lib/game/types.ts` so easy and medium are less punishing without flattening the ladder:
+    - `easy` bubble duration `7600 -> 8400` ms and air drain `2.8 -> 2.1` per second
+    - `medium` bubble duration `6000 -> 6500` ms and air drain `4.2 -> 3.0` per second
+    - left `hard` and `challenge` timing/drain values unchanged to preserve the existing higher-pressure modes
+  - Extracted the shared round air constants from `src/features/game/GameScreen.tsx` into `ROUND_AIR_RULES` in `src/lib/game/types.ts` so the round-loop pacing math has a small shared config surface instead of hidden component-local values.
+  - Updated `src/features/game/GameScreen.tsx` to consume `ROUND_AIR_RULES` while preserving the current gameplay loop, scoring loop, and answer-resolution flow.
+  - Added focused pacing verification in `src/lib/game/roundPacing.test.ts`:
+    - verifies easy and medium still net positive air on a moderate correct response window
+    - verifies hard and challenge still require quicker recall on the same response share
+    - verifies the recovery window and passive-pressure ladder still descend by difficulty
+  - Required verification completed:
+    - `npm test` ✅ (`6` test files passed, `21` tests passed)
+    - `npm run build` ✅ (`vite` production build completed successfully)
+  - Remaining later-Phase-2 work intentionally deferred after this pacing pass:
+    - broader keyboard hardening
+    - broader touch hardening
+    - broader reduced-motion verification and polish outside the current pacing slice
+    - broader responsive hardening for game and stats layouts
+- 2026-05-11 subtraction distractor coverage follow-up:
+  - Kept production behavior unchanged because `src/lib/game/questions.ts` already contains subtraction-specific distractor shaping; this pass only extends direct coverage in `src/lib/game/questions.test.ts`.
+  - Added a representative normal subtraction assertion for `buildDistractorValues("subtract", 12, 5, 7, 6)` and preserved the existing zero-difference safety case `buildDistractorValues("subtract", 1, 1, 0, 6)`.
+  - Preserved the rest of the distractor-quality assertions and the generated-choice safety checks in `src/lib/game/questions.test.ts`.
+  - Required verification completed:
+    - `npm test` ✅ (`5` test files passed, `18` tests passed)
+  - Build verification not run because this follow-up is test-only and does not change production code.
+  - This closes the remaining subtraction coverage gap on the developer side for the distractor-quality slice by proving a representative non-edge subtraction fact still yields subtraction-shaped wrong answers.
+- 2026-05-11 distractor-quality slice:
+  - Replaced the old generic offset plus random-variance distractor logic in `src/lib/game/questions.ts` with operation-aware candidate builders for addition, subtraction, multiplication, and division.
+  - The new distractor path stays pure and deterministic: it derives plausible wrong answers from nearby operand, factor, and quotient mistakes first, then uses a nearest-neighbor fallback only when an edge case still needs more unique choices.
+  - Exported `buildDistractorValues(...)` so distractor behavior can be tested directly without depending on random question generation or UI state.
+  - Updated the existing question-generation coverage in `src/lib/game/questions.test.ts`:
+    - added representative distractor assertions for addition, subtraction, multiplication, and division
+    - added a subtraction zero-difference safety case to prove distractors stay non-negative
+    - tightened the generated-question assertions so the final choices still contain exactly one correct answer and no duplicate values
+  - Required verification completed:
+    - `npm test` ✅ (`5` test files passed, `17` tests passed)
+    - `npm run build` ✅
+  - Remaining later-Phase-2 work intentionally deferred after this distractor pass:
+    - survival pacing changes in `src/features/game/GameScreen.tsx`
+    - broader keyboard, touch, reduced-motion, and responsive hardening
+- 2026-05-11 setup-start guardrail slice:
+  - Disabled the setup screen start control when `validateSettings` reports invalid settings, so obvious invalid state cannot start a round from the UI.
+  - Added a defensive validity check in `src/App.tsx` before any transition into gameplay. Invalid settings now keep the app on setup instead of entering the round, which covers stale or bypassed start actions.
+  - Added focused regression coverage:
+    - `src/features/setup/SetupScreen.test.tsx` verifies the invalid setup state disables the start control and does not fire `onStartGame`.
+    - `src/App.test.tsx` verifies the parent start path still blocks a bypassed start action with invalid settings and still allows valid settings through.
+    - `src/lib/game/validation.test.ts` now covers `isSettingsValid` directly for invalid and valid settings.
+  - Required verification completed:
+    - `npm test` ✅
+    - `npm run build` ✅
+  - Remaining later-Phase-2 work intentionally deferred in this slice:
+    - distractor tuning
+    - survival pacing changes
+    - broader keyboard, touch, reduced-motion, and responsive hardening beyond this setup-start guardrail
+- 2026-05-11 setup-start guardrail regression follow-up:
+  - Kept production behavior unchanged because the existing setup button disablement and `App`-level `isSettingsValid` check already cover range-invalid settings as intended.
+  - Extended `src/features/setup/SetupScreen.test.tsx` to prove the setup UI still blocks `Start the dive` when a selected operation has `min > max`, while preserving the existing `no enabled operations` regression case.
+  - Extended `src/App.test.tsx` to prove the parent bypass guard also blocks a persisted `min > max` settings shape from entering gameplay, while keeping the valid-settings path coverage intact.
+  - Extended `src/lib/game/validation.test.ts` so direct validity assertions now cover both `no enabled operations` and the representative `min > max` invalid shape, with the valid default settings assertion preserved.
+  - Required verification completed:
+    - `npm test` ✅ (`5` test files passed, `13` tests passed)
+  - Build verification not run because this follow-up is test-only and does not change production code.
+  - This follow-up is intended to close the regression-coverage gap for the setup-start guardrail slice by proving a representative range-invalid state is blocked at the validation, setup UI, and parent bypass layers.
+## Tester Results
+
+- 2026-05-12 setup/stats responsive hardening slice validation: `pass`
+  - Confirmed the setup layout is coherent at the developer-recorded tablet and narrow-laptop widths (`820x768` and `640x760`) in the local browser. Hero actions wrap into usable full-width controls at the narrow breakpoint, operation cards remain readable, range fields stack before they get cramped, card footers keep the recommended-range action legible, and difficulty cards keep stable scannable blocks.
+  - Confirmed the stats layout is coherent at the same widths. Metric cards stay large enough to scan, insight cards avoid awkward compression, and fact-list sections collapse to a single column at the narrow breakpoint instead of forcing tight side-by-side content.
+  - Confirmed the shared shell/topbar/profile-chip changes are minimal and appropriate for these screens. The topbar wraps predictably on the narrow width, the profile chip remains readable, and the profile action stays usable without introducing broader navigation or gameplay changes.
+  - Confirmed the slice stayed tightly scoped to setup/stats responsive behavior plus minimal shared shell styling. Reviewed `src/features/setup/SetupScreen.tsx`, `src/features/stats/StatsScreen.tsx`, `src/styles/global.css`, and `src/App.tsx`; I did not find gameplay logic, gameplay pacing, distractor logic, setup-start guardrail logic, README/Cloudflare Pages work, Phase 4 signoff, accounts/backend/teacher work, or feature expansion reopened in this pass.
+  - Browser validation used the local Vite server at `http://127.0.0.1:5173/`; no browser console errors appeared beyond normal Vite/React development messages.
+  - No concrete release-critical responsive mismatch remains for this bounded setup/stats slice.
+  - Residual risk: the current browser profile did not have saved sessions, so the recent-session cards were validated by `StatsScreen.tsx` structure and the `.session-list` / `.session-card` CSS rather than a rendered non-empty session panel. Also, this workspace path is not a Git repository, so I could not use a git diff to prove the exact active change set.
+- 2026-05-12 gameplay-input hardening slice validation: `pass`
+  - Confirmed active questions now restore focus predictably to the current answer set. `src/features/game/GameScreen.tsx` focuses the first current choice whenever an unlocked question becomes active, keyed by the current fact and choice count, and the reduced-motion regression test proves focus returns after the next question loads.
+  - Confirmed the keyboard path is coherent for the current choice set. Number shortcuts are bounded to the rendered `1-6` choices, arrow keys wrap across the active answers, and `Home`/`End` move directly to the first and last current choices without changing setup, stats, or other screens.
+  - Confirmed the added accessibility semantics are appropriate for this gameplay surface. The answer group has visible keyboard instructions, reduced-motion copy explains the still-answer path, feedback is announced through `role="status"`, and air plus question time use bounded `progressbar` semantics with current values.
+  - Confirmed visible focus and touch usability are materially better for first-release Chromebook/tablet use. Answer choices now have large minimum hit areas, shortcut badges, touch-action tuning, and a strong `:focus-visible` ring; `Leave dive` also has a larger target and matching visible focus treatment.
+  - Confirmed reduced-motion answering remains usable after question advance. The reduced-motion path renders a stable grid, supports number-key selection, announces result feedback, and restores focus to the first answer on the next prompt.
+  - Confirmed the slice stayed tightly scoped to the gameplay answering surface. The reviewed files for this pass are `src/features/game/GameScreen.tsx`, `src/styles/global.css`, and `src/features/game/GameScreen.test.tsx`; I did not find README, Cloudflare Pages, Phase 4 signoff, accounts/backend/teacher work, or setup/stats responsive hardening folded into this handoff.
+  - No concrete gameplay-input mismatch remains for this bounded slice.
+  - Residual risk: I validated by file inspection because this workspace path is not a Git repository, so I could not use a git diff to prove the exact active change set. Also, global arrow-key handling intentionally works from anywhere on the gameplay screen while unlocked; that improves quick classroom input but could feel slightly aggressive if a keyboard user focuses `Leave dive` and presses an arrow key.
+- 2026-05-11 setup-start guardrail slice validation: `failure`
+  - Confirmed the implementation guards the setup UI start path: `src/features/setup/SetupScreen.tsx` derives `canStartGame` from `validateSettings(settings)` and disables the `Start the dive` control when any setup error exists.
+  - Confirmed the parent-level bypass guard is present: `src/App.tsx` rechecks `isSettingsValid(activeProfileState.settings)` before switching to `view === "game"`, so invalid settings stay on setup even if the child start action is bypassed.
+  - Confirmed valid settings still allow gameplay through the parent path: `src/App.test.tsx` covers the valid default-settings case and expects the game screen to render.
+  - Concrete mismatch: the new regression coverage only exercises one invalid-settings shape, `no enabled operations`, in `src/features/setup/SetupScreen.test.tsx`, `src/App.test.tsx`, and the direct `isSettingsValid` assertions in `src/lib/game/validation.test.ts`. Other release-critical invalid settings already recognized by `validateSettings`, especially invalid ranges such as `min > max`, are not covered through the setup-start UI guard or the parent bypass guard.
+  - Residual risk: a future regression that breaks start blocking for range-invalid settings could still leave the current slice green because the end-to-end invalid-state tests are narrower than the intended `invalid settings cannot start gameplay` release behavior.
+- 2026-05-11 setup-start guardrail regression follow-up validation: `pass`
+  - Confirmed the setup UI guard now has representative coverage for both invalid shapes requested in this follow-up: `src/features/setup/SetupScreen.test.tsx` blocks `Start the dive` for `no enabled operations` and for a selected operation where `min > max`.
+  - Confirmed the parent bypass guard now has representative coverage for both invalid shapes: `src/App.test.tsx` keeps the app on setup when a bypassed start action uses either `no enabled operations` or a persisted `min > max` range, and it still preserves the valid-settings path into gameplay.
+  - Confirmed the direct validity assertions now cover the requested matrix: `src/lib/game/validation.test.ts` asserts `isSettingsValid(...)` returns `false` for `no enabled operations`, `false` for `min > max`, and `true` for the default valid settings.
+  - Confirmed the follow-up stayed narrowly scoped to the setup-start guardrail slice. The reviewed production files for this area (`src/features/setup/SetupScreen.tsx`, `src/App.tsx`, and `src/lib/game/validation.ts`) do not show broader distractor, pacing, keyboard, touch, reduced-motion, or responsive hardening changes as part of this pass.
+  - No concrete mismatch remains for the earlier regression-coverage gap that triggered this follow-up.
+  - Residual risk: the regression suite is now representative for the two release-critical invalid-setting shapes requested here, but it still does not exhaustively exercise every `validateSettings` branch such as whole-number enforcement, absolute bounds, or divide-by-zero range errors through the setup UI and parent bypass paths.
+- 2026-05-11 distractor-quality slice validation: `failure`
+  - Confirmed the implementation in `src/lib/game/questions.ts` is now operation-aware rather than mostly generic offset noise. Addition, subtraction, multiplication, and division each have separate distractor builders, and the nearest-neighbor fallback only fills remaining slots after those operation-shaped candidates are attempted.
+  - Confirmed the generated-question assertions still cover several release-critical guarantees: `src/lib/game/questions.test.ts` keeps a direct division-generation validity check, and the challenge-difficulty generated-question assertion still checks requested choice count, exactly one correct answer, and no duplicate choice values.
+  - Confirmed the slice stayed narrowly scoped to question generation and question-generation tests. The reviewed implementation for this pass is confined to `src/lib/game/questions.ts` and `src/lib/game/questions.test.ts`; I did not find survival pacing work in `src/features/game/GameScreen.tsx` or broader keyboard, touch, reduced-motion, responsive, README, Cloudflare, or Phase 4 signoff work folded into this slice.
+  - Concrete mismatch: the new direct distractor tests are representative for addition, multiplication, and division, but not for subtraction. The only subtraction-specific test in `src/lib/game/questions.test.ts` is the zero-difference edge case `buildDistractorValues("subtract", 1, 1, 0, 6)`, which primarily proves non-negative fallback behavior. It does not verify that a normal subtraction fact produces subtraction-shaped wrong answers instead of mostly generic nearby numbers.
+  - Residual risk: a future regression that weakens or replaces the normal subtraction distractor builder with generic fallback-heavy behavior could still leave this slice green, because the current subtraction test matrix does not exercise a representative non-edge subtraction fact alongside the zero-difference safety case.
+- 2026-05-11 distractor-quality subtraction follow-up validation: `pass`
+  - Confirmed the direct distractor assertions in `src/lib/game/questions.test.ts` are now representative across all four operations: addition uses `buildDistractorValues("add", 8, 7, 15, 6)`, subtraction now uses the normal fact `buildDistractorValues("subtract", 12, 5, 7, 6)`, multiplication uses `buildDistractorValues("multiply", 4, 6, 24, 6)`, and division uses `buildDistractorValues("divide", 24, 6, 4, 6)`.
+  - Confirmed subtraction is no longer covered only by the zero-difference edge case. The new `12 - 5 = 7` assertion expects `[6, 8, 5, 9, 12]`, which exercises subtraction-shaped wrong answers from nearby operand mistakes and operand-confusion distractors, while the existing `1 - 1 = 0` case still protects non-negative fallback behavior.
+  - Confirmed the generated-question assertions still protect the release-critical guarantees requested for this slice: the challenge-difficulty test still preserves requested choice count, exactly one correct answer, and no duplicate choice values, and the division-generation test still preserves exact-division validity with a positive divisor and matching quotient.
+  - Confirmed the follow-up stayed narrowly test-focused. In the files reviewed for this handoff, the follow-up change surface is limited to `src/lib/game/questions.test.ts`; I did not find survival pacing work in `src/features/game/GameScreen.tsx` or broader keyboard, touch, reduced-motion, responsive, README, Cloudflare, or Phase 4 signoff work folded into this pass.
+  - No concrete mismatch remains for the distractor-quality coverage gap that triggered this follow-up.
+  - Residual risk: the distractor suite is now representative for each operation, but it still relies on one fixed example per operation plus the subtraction edge case, so a future regression isolated to different operand shapes or fallback-order paths could still escape this slice.
+- 2026-05-11 survival-pacing slice validation: `failure`
+  - Confirmed the updated pacing is materially less punishing than the earlier easy and medium settings recorded in this run log. In the live `GameScreen` loop with the shared `ROUND_AIR_RULES`, the break-even correct-response window moves from about `51% -> 63%` of the bubble lifetime on easy and from about `41% -> 55%` on medium, so the lower tiers do gain real breathing room.
+  - Confirmed hard and challenge still preserve the higher-pressure modes. Their timing and drain values in `src/lib/game/types.ts` are unchanged, their live break-even windows stay much tighter than medium at about `35%` and `33%` of bubble lifetime respectively, and the shorter clocks plus larger choice counts still keep the upper tiers meaningfully more demanding.
+  - Confirmed the slice stayed narrowly scoped to pacing. The reviewed change surface is limited to `src/features/game/GameScreen.tsx`, `src/lib/game/types.ts`, and `src/lib/game/roundPacing.test.ts`; I did not find broader keyboard, touch, reduced-motion, responsive, README, Cloudflare, or Phase 4 signoff work folded into this pass.
+  - Concrete mismatch: the new helper in `src/lib/game/roundPacing.test.ts` does not model the `420` ms locked and feedback delay in `queueNextQuestion` (`src/features/game/GameScreen.tsx`) even though the live air-drain interval keeps running during that delay. Because of that omission, the test assertion that medium has positive air on a `60%` correct-response share is not true in the actual loop. In runtime terms, a medium correct answer at `60%` of bubble life still loses about `0.96` air after passive drain; the test only passes because it ignores the inter-question drain.
+  - Residual risk: the shared `ROUND_AIR_RULES` plus the current difficulty timing and drain values still form a mostly coherent ladder, but medium remains close to break-even and the current pacing tests overstate how forgiving it is. A narrow follow-up should align the assertions with the full round cycle, then confirm whether medium's live break-even window is acceptable or still needs one more tuning pass.
+- 2026-05-12 survival-pacing alignment follow-up validation: `failure`
+  - Confirmed the follow-up fixed the earlier constant drift around the locked transition window. `src/features/game/GameScreen.tsx` now consumes `ROUND_NEXT_QUESTION_DELAY_MS` from `src/lib/game/types.ts`, and `src/lib/game/roundPacing.test.ts` uses that same shared delay source instead of a duplicated `420`.
+  - Confirmed the slice stayed narrowly scoped to pacing. The reviewed change surface remains limited to `src/features/game/GameScreen.tsx`, `src/lib/game/types.ts`, and `src/lib/game/roundPacing.test.ts`; I did not find broader keyboard, touch, reduced-motion, responsive, README, Cloudflare, or Phase 4 signoff work folded into this follow-up.
+  - Confirmed the difficulty ladder is still directionally coherent in the current numbers. Using the shared difficulty config plus the `420` ms lock window, the continuous break-even correct-response share is about `63.0%` on easy, `60.7%` on medium, `35.1%` on hard, and `33.4%` on challenge, so easy remains looser than medium and hard and challenge remain meaningfully tighter than medium.
+  - Concrete mismatch: the pacing verification still does not fully match the live round loop because `src/features/game/GameScreen.tsx` drains air in `100` ms ticks (`setInterval(..., 100)` with `airDrainPerSecond / 10`), while `src/lib/game/roundPacing.test.ts` models passive drain as a continuous formula. That keeps the corrected `420` ms delay in scope, but it still omits the live tick cadence as a timing source.
+  - Concrete mismatch: that remaining timing-model gap is large enough to flip the new medium fairness assertion. At the intended `60%` moderate-response share, the test's continuous math shows medium at `+0.12` air, but the live `100` ms loop produces either `43` ticks (`+0.175` air) or `44` ticks (`-0.1` air) across the same `4320` ms full cycle depending on interval alignment. The current assertion that medium is net positive on that share is therefore not guaranteed true in runtime.
+  - Residual risk: the medium-only retune moved the mode much closer to the first-release fairness target without flattening the ladder, but the margin is still phase-sensitive until the verification models the live tick cadence or medium is nudged slightly further so the `60%` target stays positive across the full `100` ms alignment range.
+- 2026-05-12 survival-pacing tick-cadence follow-up validation: `pass`
+  - Confirmed `src/features/game/GameScreen.tsx` and `src/lib/game/roundPacing.test.ts` now share the same air-drain cadence source. The live loop computes per-tick drain from `ROUND_AIR_DRAIN_INTERVAL_MS`, and the pacing test imports that same constant for both tick counts and per-tick drain math, so the earlier continuous-versus-tick mismatch is closed.
+  - Confirmed the pacing test now models the floor/ceil tick-alignment range the live loop can hit. `getTickCountRange(...)` uses `Math.floor` and `Math.ceil` over the full elapsed window, and the medium `60%` case explicitly checks the runtime-relevant `4320` ms cycle at `43` best-alignment ticks and `44` worst-alignment ticks.
+  - Confirmed medium is now non-negative at the worst relevant alignment for the intended `60%` moderate-response target. With `medium` air drain at `2.72` per second, each `100` ms tick costs `0.272` air, so the `44`-tick worst case lands at about `+0.032` air and the `43`-tick best case lands at about `+0.304`.
+  - Confirmed the ladder did not flatten. Easy remains looser than medium with a larger worst-case delta (`+0.45` vs `+0.032`) and a larger worst-aligned net-positive window (`5280` ms vs `3980` ms), while hard and challenge remain materially tighter than medium with negative `60%` deltas and much shorter worst-aligned net-positive windows (`1580` ms and `1180` ms).
+  - Confirmed the reviewed slice stayed narrowly scoped to pacing. In the files reviewed for this handoff, the active change surface remains `src/features/game/GameScreen.tsx`, `src/lib/game/types.ts`, and `src/lib/game/roundPacing.test.ts`; I did not find the later broad keyboard, touch, reduced-motion, responsive, README, Cloudflare, or Phase 4 signoff work folded into this pass.
+  - No concrete pacing-verification mismatch remains in the modeled live `100` ms cadence path for this slice.
+  - Residual risk: medium now clears the worst modeled tick alignment, but only by about `0.032` air, so real browser timer jitter beyond the idealized `43`/`44`-tick alignment model could still make the mode feel close to break-even in practice.
+
+## Next Handoff
+
+- `master-developer`: advance the workflow to Phase 3 and keep the next handoff centered on repo docs plus Cloudflare Pages prep.
+
+## Open Questions Or Blockers
+
+- No immediate blocker.
+- `npm test` and `npm run build` both re-ran successfully in this setup/stats responsive pass; no additional verification blocker remains on the developer side for this slice.
+- The remaining survival-pacing verification mismatch stays closed on the developer side because the shared cadence and worst-alignment model remain intact.
+- Residual pacing risk remains narrow and concrete: medium only stays positive by about `0.032` air at the modeled `44`-tick worst alignment for the `60%` target, so real runtime jitter could still make the margin feel thin even though the intended cadence model now passes.
+- The setup/stats responsive hardening pass is complete on the developer side.
+- The setup/stats responsive hardening pass has now passed tester validation for the bounded slice.
+- Keep README and Cloudflare Pages documentation work in Phase 3; this pass did not start that work.
+- No gameplay interaction, gameplay pacing, distractor, or setup-start guardrail logic was reopened in this handoff.
+- Residual setup/stats responsive risk is narrow: the current browser profile had no saved sessions, so the non-empty recent-session panel was validated by structure and CSS rather than a rendered populated state.
+- No remaining Phase 2 blocker requires another hardening slice before Phase 3.
+
+## Completion Summary
+
+- Phase 2 is complete. Setup-start guardrails, distractor quality, survival pacing, gameplay-input hardening, and the bounded setup/stats responsive sweep have now passed tester validation; no concrete release-critical gameplay or responsive mismatch remains that should block Phase 3 routing.
