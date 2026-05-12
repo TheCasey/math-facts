@@ -6,7 +6,7 @@ This guide covers the first-release deployment path for `mathfacts.thecaseyb.com
 
 - The source must be pushed to a GitHub repository that Cloudflare Pages can access.
 - The repository root must contain `package.json`, `package-lock.json`, `index.html`, `src/`, and `vite.config.ts`.
-- Use Node.js `20.19.0` or newer. The current local verification used Node `24.15.0` and npm `11.12.1`.
+- Use Node.js `20.19.4` or newer. The current local verification used Node `24.15.0` and npm `11.12.1`.
 - The Cloudflare account must have access to the `thecaseyb.com` zone, or the operator must be able to create the required DNS record wherever the zone is managed.
 
 ## Local Release Check
@@ -36,7 +36,7 @@ Open the preview URL printed by Vite and confirm the app loads. If a browser alr
 | Root directory | repository root |
 | Environment variables | none required |
 
-If the build image does not already use Node `20.19.0` or newer, add `NODE_VERSION` with a compatible value such as `24`.
+If the build image does not already use Node `20.19.4` or newer, add `NODE_VERSION` with a compatible value such as `20.19.4` or `24`.
 
 ## Preview Deployment Flow
 

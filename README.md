@@ -4,7 +4,7 @@ A kid-friendly underwater math facts game built with React, TypeScript, and Vite
 
 ## Requirements
 
-- Node.js `20.19.0` or newer. This workspace has been verified with Node `24.15.0` and npm `11.12.1`.
+- Node.js `20.19.4` or newer. This workspace has been verified with Node `24.15.0` and npm `11.12.1`.
 - npm. Use the checked-in `package-lock.json` with `npm ci` for repeatable installs.
 - A modern browser for local preview and play testing.
 
@@ -53,7 +53,7 @@ The intended release path is GitHub-connected Cloudflare Pages:
 - Install command: `npm ci`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Runtime: Node `20.19.0` or newer. Set `NODE_VERSION` in Cloudflare Pages if the project build image does not already use a compatible Node version.
+- Runtime: Node `20.19.4` or newer. Set `NODE_VERSION` in Cloudflare Pages if the project build image does not already use a compatible Node version.
 - Environment variables: none for v1
 - Backend services: none for v1
 
