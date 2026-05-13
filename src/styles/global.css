@@ -233,8 +233,7 @@ input {
 .primary-button,
 .ghost-button,
 .difficulty-card,
-.reduced-motion-choice,
-.answer-bubble {
+.reduced-motion-choice {
   border: 0;
   transition:
     transform 160ms ease,
@@ -268,8 +267,7 @@ input {
 .primary-button:hover,
 .ghost-button:hover,
 .difficulty-card:hover,
-.reduced-motion-choice:hover,
-.answer-bubble:hover {
+.reduced-motion-choice:hover {
   transform: translateY(-2px);
 }
 
@@ -580,10 +578,11 @@ input {
 
 .answer-bubble {
   position: absolute;
-  bottom: -12%;
+  top: calc(100% - var(--bubble-size) - var(--bubble-y));
   left: var(--bubble-left);
   width: var(--bubble-size);
   height: var(--bubble-size);
+  border: 0;
   border-radius: 999px;
   background: var(--bubble);
   color: var(--ink);
@@ -592,6 +591,14 @@ input {
   font-weight: 700;
   box-shadow: 0 16px 30px rgba(9, 45, 68, 0.14);
   animation: rise var(--bubble-duration) linear forwards;
+  transition:
+    box-shadow 160ms ease,
+    background 160ms ease;
+  will-change: top, transform;
+}
+
+.answer-bubble:hover {
+  box-shadow: 0 20px 34px rgba(9, 45, 68, 0.2);
 }
 
 .reduced-motion-grid {
@@ -673,11 +680,13 @@ input {
 
 @keyframes rise {
   from {
-    transform: translate(-50%, 0) scale(0.94);
+    top: calc(100% - var(--bubble-size) - var(--bubble-y));
+    transform: translateX(-50%) scale(0.96);
   }
 
   to {
-    transform: translate(-50%, -135%) scale(1.06);
+    top: calc(-1 * var(--bubble-size) - 16px);
+    transform: translateX(-50%) scale(1.03);
   }
 }
 

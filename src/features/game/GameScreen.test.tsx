@@ -48,6 +48,7 @@ function createQuestion(
     choices: choices.map((choice, index) => ({
       ...choice,
       bubbleX: 16 + index * 24,
+      bubbleY: index % 2 === 0 ? 5 : 26,
       bubbleSize: 110
     }))
   };

@@ -1,5 +1,5 @@
 import { createDefaultSettings } from "./defaults";
-import { buildDistractorValues, generateQuestion } from "./questions";
+import { buildBubbleLayout, buildDistractorValues, generateQuestion } from "./questions";
 
 describe("buildDistractorValues", () => {
   it("uses nearby addition misses before falling back to wider neighbors", () => {
@@ -54,5 +54,22 @@ describe("generateQuestion", () => {
     expect(new Set(question.choices.map((choice) => choice.value)).size).toBe(
       question.choices.length
     );
+  });
+
+  it("places challenge bubbles in staggered lanes so answers do not stack", () => {
+    const layout = buildBubbleLayout(6);
+
+    expect(layout).toHaveLength(6);
+    expect(new Set(layout.map((slot) => `${slot.bubbleX}:${slot.bubbleY}`)).size).toBe(6);
+    expect(layout.some((slot) => slot.bubbleY >= 30)).toBe(true);
+
+    for (let leftIndex = 0; leftIndex < layout.length; leftIndex += 1) {
+      for (let rightIndex = leftIndex + 1; rightIndex < layout.length; rightIndex += 1) {
+        const horizontalGap = Math.abs(layout[leftIndex].bubbleX - layout[rightIndex].bubbleX);
+        const verticalGap = Math.abs(layout[leftIndex].bubbleY - layout[rightIndex].bubbleY);
+
+        expect(horizontalGap >= 20 || verticalGap >= 24).toBe(true);
+      }
+    }
   });
 });

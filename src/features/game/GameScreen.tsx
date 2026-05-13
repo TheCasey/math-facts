@@ -433,6 +433,7 @@ export function GameScreen({ profileName, settings, onExit, onFinish }: GameScre
                   {
                     "--bubble-duration": `${difficulty.bubbleDurationMs}ms`,
                     "--bubble-left": `${choice.bubbleX}%`,
+                    "--bubble-y": `${choice.bubbleY}%`,
                     "--bubble-size": `${choice.bubbleSize}px`
                   } as CSSProperties
                 }

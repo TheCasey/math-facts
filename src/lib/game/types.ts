@@ -66,6 +66,7 @@ export interface QuestionChoice {
   value: number;
   isCorrect: boolean;
   bubbleX: number;
+  bubbleY: number;
   bubbleSize: number;
 }
 

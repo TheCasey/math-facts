@@ -1,8 +1,19 @@
-import { DIFFICULTY_CONFIG, OPERATION_SYMBOLS, type GameSettings, type GeneratedQuestion, type Operation, type QuestionChoice } from "./types";
+import {
+  DIFFICULTY_CONFIG,
+  OPERATION_SYMBOLS,
+  type GameSettings,
+  type GeneratedQuestion,
+  type Operation,
+  type QuestionChoice
+} from "./types";
 import { getEnabledOperations } from "./defaults";
 
 function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
 }
 
 function sampleOperation(settings: GameSettings): Operation {
@@ -269,6 +280,53 @@ export function buildDistractorValues(
   return [...distractors].slice(0, targetCount);
 }
 
+export function buildBubbleLayout(
+  choiceCount: number
+): Array<Pick<QuestionChoice, "bubbleX" | "bubbleY">> {
+  const layoutPresets: Record<number, Array<Pick<QuestionChoice, "bubbleX" | "bubbleY">>> = {
+    3: [
+      { bubbleX: 18, bubbleY: 5 },
+      { bubbleX: 50, bubbleY: 18 },
+      { bubbleX: 82, bubbleY: 5 }
+    ],
+    4: [
+      { bubbleX: 24, bubbleY: 5 },
+      { bubbleX: 76, bubbleY: 5 },
+      { bubbleX: 24, bubbleY: 32 },
+      { bubbleX: 76, bubbleY: 32 }
+    ],
+    5: [
+      { bubbleX: 18, bubbleY: 5 },
+      { bubbleX: 50, bubbleY: 5 },
+      { bubbleX: 82, bubbleY: 5 },
+      { bubbleX: 34, bubbleY: 32 },
+      { bubbleX: 66, bubbleY: 32 }
+    ],
+    6: [
+      { bubbleX: 18, bubbleY: 5 },
+      { bubbleX: 50, bubbleY: 5 },
+      { bubbleX: 82, bubbleY: 5 },
+      { bubbleX: 18, bubbleY: 32 },
+      { bubbleX: 50, bubbleY: 32 },
+      { bubbleX: 82, bubbleY: 32 }
+    ]
+  };
+
+  const preset = layoutPresets[choiceCount];
+
+  if (preset) {
+    return preset;
+  }
+
+  return Array.from({ length: choiceCount }, (_, index) => {
+    const spread = choiceCount <= 1 ? 0 : index / (choiceCount - 1);
+    return {
+      bubbleX: clamp(16 + spread * 68, 14, 86),
+      bubbleY: index % 2 === 0 ? 6 : 28
+    };
+  });
+}
+
 function createBubbleChoices(
   operation: Operation,
   operandA: number,
@@ -281,15 +339,14 @@ function createBubbleChoices(
     ...buildDistractorValues(operation, operandA, operandB, correctAnswer, choiceCount)
   ];
   const shuffled = [...candidateAnswers].sort(() => Math.random() - 0.5);
-  const xPositions = shuffled
-    .map(() => randomInt(10, 86))
-    .sort((left, right) => left - right);
+  const bubbleLayout = buildBubbleLayout(shuffled.length);
 
   return shuffled.map((value, index) => ({
     value,
     isCorrect: value === correctAnswer,
-    bubbleX: xPositions[index],
-    bubbleSize: randomInt(92, 132)
+    bubbleX: bubbleLayout[index]?.bubbleX ?? 50,
+    bubbleY: bubbleLayout[index]?.bubbleY ?? 8,
+    bubbleSize: randomInt(96, 112)
   }));
 }
 
