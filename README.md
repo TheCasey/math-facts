@@ -2,6 +2,16 @@
 
 A kid-friendly underwater math facts game built with React, TypeScript, and Vite. The first release is a static browser app: student profiles, settings, best scores, and mastery progress are stored locally in the browser with `localStorage`.
 
+
+## Features and testing evidence
+
+- Four arithmetic operations with configurable operand ranges and separate gameplay difficulty.
+- Local student profiles, saved settings, best scores, and fact mastery summaries.
+- Keyboard answer controls and a reduced-motion presentation.
+- Vitest and React Testing Library tests for question generation, exact division, distractors, mastery, setup validation, start guards, pacing, and keyboard interaction.
+
+See [the QA checklist](docs/qa-checklist.md) for a repeatable manual smoke path and [the CI workflow](.github/workflows/ci.yml) for automated test and build commands. The [release signoff](docs/first-release-signoff.md) records earlier local verification; it does not establish that the planned public domain is live.
+
 ## Requirements
 
 - Node.js `20.19.4` or newer. This workspace has been verified with Node `24.15.0` and npm `11.12.1`.
